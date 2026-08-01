@@ -2,7 +2,7 @@ import os
 import shutil
 from settings import documentos, compactados, audios, planilhas, imagens, videos, apresentacoes, executaveis, ebooks, jogos, design, codigos
 
-pasta = input("Digite a pasta que quer organizar(o caminho completo)")
+pasta = input("Digite a pasta que quer organizar(o caminho completo): ")
 if not os.path.isdir(pasta):
     print("pasta não encontrada")
     exit()
