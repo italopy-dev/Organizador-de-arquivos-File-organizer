@@ -2,8 +2,8 @@
 Um organizador de arquivos automático feito em python.
 ## Recursos
 - Organiza arquivos por extensões
-- Cria automaticamente as pastas necessárias
-- Configurável através do arquivo'settings.py'
+- Cria automaticamente as subpastas necessárias 
+- Detecta arquivos duplicados
 ## Como usar??
 1. Baixe o projeto
 2. Execute 'main.py'

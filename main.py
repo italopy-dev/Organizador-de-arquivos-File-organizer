@@ -1,65 +1,41 @@
+from dictionary import dicionario_extensoes
 import os
 import shutil
-from settings import documentos, compactados, audios, planilhas, imagens, videos, apresentacoes, executaveis, ebooks, jogos, design, codigos
 
-pasta = input("Digite a pasta que quer organizar(o caminho completo): ")
-if not os.path.isdir(pasta):
-    print("pasta não encontrada")
-    exit()
+def ver_extensoes(caminho):
+    separacao = os.path.splitext(caminho)
+    extensao = separacao[1]
+    return extensao
 
-arquivos = os.listdir(pasta)
+def checar_arquivo(arquivo, pasta_destino):
+    nome = os.path.basename(arquivo)
+    if nome in os.listdir(pasta_destino):
+        nome_semext = os.path.splitext(arquivo)[0]
+        arquivo2 = f"{nome_semext}2{os.path.splitext(arquivo)[1]}"
+        os.rename(arquivo, arquivo2)
+        return arquivo2  
+    return arquivo
 
-def mover(arquivo, nome):
-    destino = os.path.join(pasta, nome)
+def main(pasta):
+    for arq in os.listdir(pasta):
+        if os.path.isdir(os.path.join(pasta, arq)):
+            continue
+        caminho_arquivo = os.path.join(pasta, arq)
+        aextensao = ver_extensoes(arq)
+        for c, v in dicionario_extensoes.items():
+            caminho_destino = os.path.join(pasta, c)
+            if aextensao in v:
+                if not os.path.isdir(caminho_destino):
+                    os.mkdir(caminho_destino)
+                caminho_arquivo = checar_arquivo(caminho_arquivo, caminho_destino)
+                shutil.move(caminho_arquivo, caminho_destino )
+                
+if __name__ == "__main__":       
+    pasta_escolhida = input("digite o caminho da pasta que quer organizar: ")
 
-    if not os.path.exists(destino):
-        os.mkdir(destino)
-    
-    inicio = os.path.join(pasta, arquivo)
-    
-    shutil.move(inicio, destino)
-
-for a in arquivos:
-    if not os.path.isfile(os.path.join(pasta, a)):
-        continue
-
-    extensao = os.path.splitext(a)[1].lower()
-
-    if extensao in documentos:
-        mover(a, "documentos")
-
-    elif extensao in compactados:
-        mover(a, "compactados")
-
-    elif extensao in audios:
-        mover(a, "áudios")
-
-    elif extensao in planilhas:
-        mover(a, "planilhas")
-
-    elif extensao in imagens:
-        mover(a, "imagens")
-
-    elif extensao in videos:
-        mover(a, "videos")
-
-    elif extensao in apresentacoes:
-        mover(a, "apresentações")
-
-    elif extensao in executaveis:
-        mover(a, "executáveis")
-
-    elif extensao in ebooks:
-        mover(a, "ebooks")
-
-    elif extensao in jogos:
-        mover(a, "jogos")
-
-    elif extensao in design:
-        mover(a, "designs")
-
-    elif extensao in codigos:
-        mover(a, "códigos")
+    if not os.path.isdir(pasta_escolhida):
+        print("PASTA NÃO ENCONTRADA")
+    main(pasta_escolhida)
 
 
 
