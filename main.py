@@ -29,13 +29,18 @@ def main(pasta):
                     os.mkdir(caminho_destino)
                 caminho_arquivo = checar_arquivo(caminho_arquivo, caminho_destino)
                 shutil.move(caminho_arquivo, caminho_destino )
-                
-if __name__ == "__main__":       
-    pasta_escolhida = input("digite o caminho da pasta que quer organizar: ")
 
-    if not os.path.isdir(pasta_escolhida):
-        print("PASTA NÃO ENCONTRADA")
-    main(pasta_escolhida)
+pastas = []                      
+pasta_escolhida = input("digite o caminho da pasta que quer organizar: ")
+while pasta_escolhida != "0":
+    pastas.append(pasta_escolhida)
+    pasta_escolhida = input("digite a outra pasta(se não tiver outra, digite 0): ")
+
+for p in pastas: 
+    if not os.path.isdir(p):
+        print(f"PASTA NÃO ENCONTRADA: {p}")
+        continue
+    main(p)
 
 
 
